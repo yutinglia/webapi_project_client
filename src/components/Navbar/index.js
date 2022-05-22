@@ -123,7 +123,7 @@ const Navbar = (props) => {
                         component="div"
                         sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
                     >
-                        <img src="logo.webp" alt="logo" style={{ width: "32px" }}></img>
+                        The Canine Shelter
                     </Typography>
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                         {pages.map((page) => (
