@@ -76,6 +76,7 @@ export default function RegisterPage() {
         Swal.fire({
             icon: 'success',
             title: 'Register Success',
+            allowOutsideClick: false
         }).then((result) => {
             /* Read more about isConfirmed, isDenied below */
             if (result.isConfirmed) {

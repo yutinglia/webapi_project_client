@@ -11,17 +11,7 @@ export default function DogeManagement() {
             <br />
             <Paper sx={{ textAlign: 'center', padding: '10px' }}>
                 <Stack spacing={1}>
-                    <br />
                     <h1>Dogs Management</h1>
-                    <br />
-                    <Button
-                        variant="contained"
-                        onClick={() => { navigate('.') }}>
-                        Add Dog
-                    </Button>
-                    <br />
-                    <br />
-                    <br />
                     <DogsTable />
                 </Stack>
             </Paper>
