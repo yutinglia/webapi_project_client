@@ -72,7 +72,6 @@ export default function DogDialog(props) {
         const data = new FormData(event.currentTarget);
         data.append("birthday", date.format("YYYY-MM-DD"))
         data.append("shelter", selectedShelter)
-        data.append("img", img)
         data.append("id", id)
         data.append("image", image[0])
 
