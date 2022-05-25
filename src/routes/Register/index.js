@@ -17,6 +17,7 @@ import UserContext from '../../contexts/user';
 import Swal from 'sweetalert2'
 import { EXPRESS_SERVER_URL, COOKIES_EXPIRES_TIME } from "../../config"
 import axios from '../../helpers/axios'
+import { RadioGroup, Radio } from '@mui/material'
 
 function Copyright(props) {
     return (
@@ -36,6 +37,9 @@ const theme = createTheme();
 export default function RegisterPage() {
 
     const { user, setUser } = React.useContext(UserContext);
+
+    const [userType, setUserType] = React.useState(2);
+
     let navigate = useNavigate();
 
     React.useEffect(() => {
@@ -58,7 +62,7 @@ export default function RegisterPage() {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
             },
-            data: JSON.stringify({ ac: username, pw: password, code: code })
+            data: JSON.stringify({ ac: username, pw: password, code: code, type: userType })
         })
 
         const json = result.data;
@@ -127,15 +131,27 @@ export default function RegisterPage() {
                                     autoComplete="new-password"
                                 />
                             </Grid>
-                            <Grid item xs={12}>
+                            <Grid item xs={12} sx={{ display: userType === "1" ? 'block' : 'none' }} >
                                 <TextField
-                                    required
+                                    required={userType === "1"}
                                     fullWidth
                                     name="signUpCode"
                                     label="Sign Up Code"
                                     type="password"
                                     id="signUpCode"
                                 />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <RadioGroup
+                                    row
+                                    aria-labelledby="demo-row-radio-buttons-group-label"
+                                    name="row-radio-buttons-group"
+                                    value={userType}
+                                    onChange={e => setUserType(e.target.value)}
+                                >
+                                    <FormControlLabel value="2" control={<Radio />} label="Public" />
+                                    <FormControlLabel value="1" control={<Radio />} label="Worker" />
+                                </RadioGroup>
                             </Grid>
                         </Grid>
                         <Button

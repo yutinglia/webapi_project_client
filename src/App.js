@@ -13,6 +13,9 @@ import NotFoundPage from './routes/NotFound';
 import LoginPage from './routes/Login'
 import RegisterPage from './routes/Register'
 import DogsManagementPage from './routes/DogsManagement';
+import FavoritesPage from './routes/Favorites'
+import DogDetailPage from './routes/Dog';
+import MessagesPage from './routes/Messages'
 
 function App() {
 
@@ -39,11 +42,12 @@ function App() {
     // for navbar
     const pages = [
         { name: 'Home', link: '/' },
-        user && (user.type === 0 || user.type === 1) ? { name: 'Dogs Management', link: '/dogs' } : null,
+        user && (user.type <= 1) ? { name: 'Dogs Management', link: '/dogs' } : null,
+        user && (user.type <= 2) ? { name: 'Favorites', link: '/favorites' } : null,
+        user && (user.type <= 2) ? { name: 'Messages', link: '/messages' } : null,
     ];
     const settings = [
         // login
-        user ? { name: 'Profile', link: '/a' } : null,
         user ? { name: 'Logout', link: '/logout', onClick: logout } : null,
         // not login
         user ? null : { name: 'Register', link: '/register' },
@@ -79,6 +83,9 @@ function App() {
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/register" element={<RegisterPage />} />
                     <Route path="/dogs" element={<DogsManagementPage />} />
+                    <Route path="/dogs/:id" element={<DogDetailPage />} />
+                    <Route path="/favorites" element={<FavoritesPage />} />
+                    <Route path="/messages" element={<MessagesPage />} />
                     <Route path="/*" element={<NotFoundPage />} />
                 </Routes>
             </BrowserRouter>

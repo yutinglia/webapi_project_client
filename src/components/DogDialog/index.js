@@ -22,7 +22,7 @@ import ImageDropzone from '../ImageDropzone';
 export default function DogDialog(props) {
 
     let { selectedDog, dogDialogOpen, setDogDialogOpen, disableBackdropClick, getDogs } = props;
-    const { name, type, birthday, chip_id, id, shelter_id, img } = selectedDog || {};
+    const { name, type, birthday, chip_id, id, shelter_id } = selectedDog || {};
 
     const [date, setDate] = React.useState(moment());
     const [shelters, setShelters] = React.useState([]);

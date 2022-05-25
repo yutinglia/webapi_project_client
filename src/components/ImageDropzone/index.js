@@ -4,7 +4,7 @@ import { Box, Button, Stack, Container } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete';
 import { EXPRESS_SERVER_URL, COOKIES_EXPIRES_TIME } from "../../config"
 
-const img = {
+const imgStyle = {
     display: 'block',
     width: 'auto',
     height: '100%'
@@ -33,7 +33,7 @@ export default function ImageDropzone(props) {
             <Stack>
                 <img
                     src={file.preview}
-                    style={img}
+                    style={imgStyle}
                     alt="Dog"
                     // Revoke data uri after image is loaded
                     onLoad={() => { URL.revokeObjectURL(file.preview) }}

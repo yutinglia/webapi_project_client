@@ -1,10 +1,8 @@
 import React from 'react'
 import { Container, Paper, Stack, Typography, TextField, Button, Grid } from '@mui/material'
-import { useNavigate } from "react-router-dom";
 import DogsTable from '../../components/DogsTable'
 
 export default function DogeManagement() {
-    let navigate = useNavigate();
 
     return (
         <Container maxWidth="md">
