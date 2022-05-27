@@ -16,6 +16,7 @@ import DogsManagementPage from './routes/DogsManagement';
 import FavoritesPage from './routes/Favorites'
 import DogDetailPage from './routes/Dog';
 import MessagesPage from './routes/Messages'
+import SignUpCodePage from './routes/SignUpCode'
 
 function App() {
 
@@ -43,6 +44,7 @@ function App() {
     const pages = [
         { name: 'Home', link: '/' },
         user && (user.type <= 1) ? { name: 'Dogs Management', link: '/dogs' } : null,
+        user && (user.type <= 0) ? { name: 'Sign Up Code', link: '/sign-up-code' } : null,
         user && (user.type <= 2) ? { name: 'Favorites', link: '/favorites' } : null,
         user && (user.type <= 2) ? { name: 'Messages', link: '/messages' } : null,
     ];
@@ -86,6 +88,7 @@ function App() {
                     <Route path="/dogs/:id" element={<DogDetailPage />} />
                     <Route path="/favorites" element={<FavoritesPage />} />
                     <Route path="/messages" element={<MessagesPage />} />
+                    <Route path="/sign-up-code" element={<SignUpCodePage />} />
                     <Route path="/*" element={<NotFoundPage />} />
                 </Routes>
             </BrowserRouter>

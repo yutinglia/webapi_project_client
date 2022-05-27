@@ -16,6 +16,7 @@ import { Button, FormControl, InputLabel, Select, MenuItem, IconButton } from '@
 import EditIcon from '@mui/icons-material/Edit';
 import DogDialog from '../DogDialog'
 import AddIcon from '@mui/icons-material/Add';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 export default function DogsTable() {
 
@@ -45,6 +46,27 @@ export default function DogsTable() {
                 allowOutsideClick: false
             })
         }
+    }
+
+    const deleteDog = async (id) => {
+        try {
+            const result = await axios(`${EXPRESS_SERVER_URL}/dogs/${id}`, { method: 'DELETE' })
+            const json = result.data;
+            if (json.status === 0) {
+                getDogs();
+                return true;
+            } else {
+                throw new Error(json.err);
+            }
+        } catch (err) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops... Delete Failed',
+                text: err,
+                allowOutsideClick: false
+            })
+        }
+        return false;
     }
 
     React.useEffect(() => {
@@ -87,6 +109,7 @@ export default function DogsTable() {
                             <TableCell align="right">Shelter</TableCell>
                             <TableCell align="right">Chip ID</TableCell>
                             <TableCell align="right">Edit</TableCell>
+                            <TableCell align="right">Delete</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -109,6 +132,31 @@ export default function DogsTable() {
                                         }}
                                     >
                                         <EditIcon />
+                                    </IconButton>
+                                </TableCell>
+                                <TableCell align="right">
+                                    <IconButton color="error"
+                                        onClick={() => {
+                                            Swal.fire({
+                                                title: `Are you sure to delete <br/>${row.name} (ID: ${row.id})?`,
+                                                showCancelButton: true,
+                                                confirmButtonText: 'Delete',
+                                                icon: 'question',
+                                                confirmButtonColor: '#dd4444'
+                                            }).then((result) => {
+                                                if (result.isConfirmed) {
+                                                    if (deleteDog(row.id)) {
+                                                        Swal.fire(
+                                                            'Deleted!',
+                                                            `${row.name} (ID: ${row.id}) has been deleted.`,
+                                                            'success'
+                                                        )
+                                                    }
+                                                }
+                                            })
+                                        }}
+                                    >
+                                        <DeleteIcon />
                                     </IconButton>
                                 </TableCell>
                             </TableRow>
