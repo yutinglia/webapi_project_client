@@ -15,7 +15,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from "react-router-dom";
 import UserContext from '../../contexts/user';
 import Swal from 'sweetalert2'
-import { EXPRESS_SERVER_URL, COOKIES_EXPIRES_TIME } from "../../config"
+import { EXPRESS_SERVER_URL } from "../../config"
 import axios from '../../helpers/axios'
 import { RadioGroup, Radio } from '@mui/material'
 

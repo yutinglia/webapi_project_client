@@ -2,7 +2,7 @@ import React from 'react'
 import { Container, Grid, Box, Stack, FormControl, InputLabel, Select, MenuItem } from '@mui/material'
 import DogCard from '../../components/DogCard'
 import axios from '../../helpers/axios'
-import { EXPRESS_SERVER_URL, COOKIES_EXPIRES_TIME } from "../../config"
+import { EXPRESS_SERVER_URL } from "../../config"
 import Swal from 'sweetalert2'
 import InfiniteScroll from 'react-infinite-scroller';
 import SearchBar from '../../components/SearchBar'

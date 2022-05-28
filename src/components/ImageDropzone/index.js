@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { Box, Button, Stack, Container } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete';
-import { EXPRESS_SERVER_URL, COOKIES_EXPIRES_TIME } from "../../config"
+import { EXPRESS_SERVER_URL } from "../../config"
 
 const imgStyle = {
     display: 'block',

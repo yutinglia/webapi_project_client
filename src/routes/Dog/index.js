@@ -4,7 +4,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { Button, CardActionArea, CardActions, IconButton, Container, Grid } from '@mui/material';
-import { EXPRESS_SERVER_URL, COOKIES_EXPIRES_TIME } from "../../config"
+import { EXPRESS_SERVER_URL } from "../../config"
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import axios from '../../helpers/axios'
 import Swal from 'sweetalert2'

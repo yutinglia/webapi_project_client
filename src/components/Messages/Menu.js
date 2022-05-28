@@ -5,12 +5,12 @@ import MenuItem from '@mui/material/MenuItem';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import axios from '../../helpers/axios'
 import Swal from 'sweetalert2'
-import { EXPRESS_SERVER_URL, COOKIES_EXPIRES_TIME } from "../../config"
+import { EXPRESS_SERVER_URL } from "../../config"
 
 const ITEM_HEIGHT = 48;
 
 export default function MessageMenu(props) {
-    const { id, updateMessages } = props;
+    const { id, updateMessages, socket } = props;
 
     const deleteDog = async () => {
         try {
@@ -18,6 +18,7 @@ export default function MessageMenu(props) {
             const json = result.data;
             if (json.status === 0) {
                 updateMessages();
+                socket.emit('c-updated-message');
                 return true;
             } else {
                 throw new Error(json.err);

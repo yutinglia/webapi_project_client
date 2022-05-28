@@ -6,7 +6,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { EXPRESS_SERVER_URL, COOKIES_EXPIRES_TIME } from "../../config"
+import { EXPRESS_SERVER_URL } from "../../config"
 import axios from '../../helpers/axios'
 import Swal from 'sweetalert2'
 import TableFooter from '@mui/material/TableFooter';
@@ -17,6 +17,8 @@ import EditIcon from '@mui/icons-material/Edit';
 import DogDialog from '../DogDialog'
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
+import HelpIcon from '@mui/icons-material/Help';
+import DogBreedHelperDialog from '../DogBreedHelperDialog'
 
 export default function DogsTable() {
 
@@ -27,6 +29,7 @@ export default function DogsTable() {
 
     const [selectedDog, setSelectedDog] = React.useState(null);
     const [dogDialogOpen, setDogDialogOpen] = React.useState(false);
+    const [dogBreedHelperDialogOpen, setDogBreedHelperDialogOpen] = React.useState(false);
 
     async function getDogs() {
         try {
@@ -96,7 +99,17 @@ export default function DogsTable() {
             >
                 Add New Dog
             </Button>
+            <Button
+                startIcon={<HelpIcon />}
+                variant="contained"
+                onClick={() => {
+                    setDogBreedHelperDialogOpen(true);
+                }}
+            >
+                Dog Breed Selection Helper
+            </Button>
             <DogDialog disableBackdropClick getDogs={getDogs} selectedDog={selectedDog} dogDialogOpen={dogDialogOpen} setDogDialogOpen={setDogDialogOpen} />
+            <DogBreedHelperDialog open={dogBreedHelperDialogOpen} setOpen={setDogBreedHelperDialogOpen} />
             {/* Rows per page: */}
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">

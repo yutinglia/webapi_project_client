@@ -20,12 +20,14 @@ import { Box, IconButton, Typography, Stack } from '@mui/material'
 import UserContext from '../../contexts/user';
 import axios from '../../helpers/axios'
 import Swal from 'sweetalert2'
-import { EXPRESS_SERVER_URL, COOKIES_EXPIRES_TIME } from "../../config"
+import { EXPRESS_SERVER_URL } from "../../config"
 import ReplayIcon from '@mui/icons-material/Replay';
 import MessageMenu from './Menu'
 
-export default function WorkersMessages() {
-    // Set initial message input value to an empty string
+const WorkersMessages = React.forwardRef((props, ref) => {
+
+    const { socket } = props;
+
     const [messageInputValue, setMessageInputValue] = React.useState("");
 
     const [chats, setChats] = React.useState([]);
@@ -37,6 +39,10 @@ export default function WorkersMessages() {
     React.useEffect(() => {
         getChats();
     }, [])
+
+    React.useImperativeHandle(ref, () => ({
+        update: updateMessages
+    }));
 
     const updateMessages = () => {
         getMessages();
@@ -89,8 +95,9 @@ export default function WorkersMessages() {
             return;
         }
 
-        getMessages();
-        getChats();
+        updateMessages();
+
+        socket.emit('c-updated-message');
 
     }
 
@@ -141,14 +148,14 @@ export default function WorkersMessages() {
                     <ConversationHeader>
                         <ConversationHeader.Back />
                         <ConversationHeader.Content userName={selectedChat ? selectedChat.username : "Please Select Chat"} />
-                        <ConversationHeader.Actions>
+                        {/* <ConversationHeader.Actions>
                             <IconButton color="primary" onClick={() => {
                                 getMessages();
                                 getChats();
                             }}>
                                 <ReplayIcon />
                             </IconButton>
-                        </ConversationHeader.Actions>
+                        </ConversationHeader.Actions> */}
                     </ConversationHeader>
 
                     <MessageList>
@@ -167,7 +174,7 @@ export default function WorkersMessages() {
                                             direction="row"
                                         >
                                             <Message.HtmlContent html={`${message.msg}`} />
-                                            <MessageMenu updateMessages={updateMessages} id={message.id} />
+                                            <MessageMenu updateMessages={updateMessages} id={message.id} socket={socket} />
                                         </Stack>
                                     </Message.CustomContent>
                                     <Message.Footer sender={message.sender === user.id ? "" : message.sender_name} sentTime={new Date(message.msg_datetime).toLocaleString()} />
@@ -187,6 +194,8 @@ export default function WorkersMessages() {
                     />
                 </ChatContainer>
             </MainContainer>
-        </Box >
+        </Box>
     )
-}
+})
+
+export default WorkersMessages;

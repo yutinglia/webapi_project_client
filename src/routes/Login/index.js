@@ -13,10 +13,11 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from '../../helpers/axios'
-import { EXPRESS_SERVER_URL, COOKIES_EXPIRES_TIME } from "../../config"
+import { EXPRESS_SERVER_URL } from "../../config"
 import UserContext from '../../contexts/user';
 import Swal from 'sweetalert2'
 import { useNavigate } from "react-router-dom";
+import GoogleSignIn from '../../components/GoogleSignIn'
 
 function Copyright(props) {
     return (
@@ -44,6 +45,43 @@ export default function LoginPage() {
             navigate('/');
         }
     }, [user])
+
+    const handleGoogleCallback = async (res, err) => {
+        if (err) {
+            Swal.fire({
+                title: 'Error!',
+                text: err,
+                icon: 'error',
+                allowOutsideClick: false
+            })
+            return;
+        }
+
+        const token = res.credential;
+
+        const result = await axios(`${EXPRESS_SERVER_URL}/login/google`, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            data: JSON.stringify({ googleToken: token })
+        })
+
+        const json = result.data;
+
+        if (json.status !== 0) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops... Login Failed',
+                text: json.err,
+                allowOutsideClick: false
+            })
+            return;
+        }
+
+        setUser(json.user);
+    }
 
     // login
     const handleSubmit = async (event) => {
@@ -74,7 +112,6 @@ export default function LoginPage() {
         }
 
         // token will auto process in axios instance
-        // Cookies.set("token", json.token, { expires: COOKIES_EXPIRES_TIME })
 
         setUser(json.user);
 
@@ -119,6 +156,8 @@ export default function LoginPage() {
                             autoComplete="current-password"
                             required
                         />
+                        <br /><br />
+                        <GoogleSignIn callback={handleGoogleCallback} />
                         <Button
                             type="submit"
                             fullWidth

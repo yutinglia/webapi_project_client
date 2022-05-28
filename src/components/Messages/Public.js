@@ -20,20 +20,24 @@ import { Box, IconButton } from '@mui/material'
 import UserContext from '../../contexts/user';
 import axios from '../../helpers/axios'
 import Swal from 'sweetalert2'
-import { EXPRESS_SERVER_URL, COOKIES_EXPIRES_TIME } from "../../config"
+import { EXPRESS_SERVER_URL } from "../../config"
 import ReplayIcon from '@mui/icons-material/Replay';
 
-export default function PublicMessages() {
-    // Set initial message input value to an empty string
+const PublicMessages = React.forwardRef((props, ref) => {
+
+    const { socket } = props;
+
     const [messageInputValue, setMessageInputValue] = React.useState("");
-
     const [messages, setMessages] = React.useState([]);
-
     const { user } = React.useContext(UserContext);
 
     React.useEffect(() => {
         getMessages();
     }, [])
+
+    React.useImperativeHandle(ref, () => ({
+        update: getMessages
+    }));
 
     const getMessages = async () => {
         try {
@@ -82,6 +86,8 @@ export default function PublicMessages() {
 
         getMessages();
 
+        socket.emit('c-updated-message');
+
     }
 
     return (
@@ -96,11 +102,11 @@ export default function PublicMessages() {
                     <ConversationHeader>
                         <ConversationHeader.Back />
                         <ConversationHeader.Content userName="Workers" />
-                        <ConversationHeader.Actions>
+                        {/* <ConversationHeader.Actions>
                             <IconButton color="primary" onClick={() => { getMessages() }}>
                                 <ReplayIcon />
                             </IconButton>
-                        </ConversationHeader.Actions>
+                        </ConversationHeader.Actions> */}
                     </ConversationHeader>
 
                     <MessageList>
@@ -130,4 +136,6 @@ export default function PublicMessages() {
             </MainContainer>
         </Box>
     )
-}
+})
+
+export default PublicMessages;

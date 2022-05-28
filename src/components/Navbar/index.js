@@ -1,20 +1,18 @@
+import { Avatar, ListItemIcon } from '@mui/material'
+import { useNavigate } from "react-router-dom";
 import * as React from 'react';
-
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
+import Container from '@mui/material/Container';
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
-// import Avatar from '@mui/material/Avatar';
-import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import Container from '@mui/material/Container';
+import Toolbar from '@mui/material/Toolbar';
+import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
-
-import { useNavigate } from "react-router-dom";
 
 const Navbar = (props) => {
     let { pages, settings } = props;
@@ -151,8 +149,8 @@ const Navbar = (props) => {
                     <Box sx={{ flexGrow: 0 }}>
                         <Tooltip title="Account">
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                {/* <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" /> */}
-                                <AccountCircleIcon sx={{ color: 'white' }} />
+                                <Avatar />
+                                {/* <AccountCircleIcon sx={{ color: 'white' }} /> */}
                             </IconButton>
                         </Tooltip>
                         <Menu
@@ -185,6 +183,9 @@ const Navbar = (props) => {
                                             () => handleNavButtonClick(setting.link)
                                     }
                                 >
+                                    <ListItemIcon>
+                                        {setting.icon}
+                                    </ListItemIcon>
                                     <Typography textAlign="center">{setting.name}</Typography>
                                 </MenuItem>
                             ))}

@@ -2,17 +2,29 @@ import React from 'react'
 import { Container, Grid, Box, Stack, FormControl, InputLabel, Select, MenuItem } from '@mui/material'
 import DogCard from '../../components/DogCard'
 import axios from '../../helpers/axios'
-import { EXPRESS_SERVER_URL, COOKIES_EXPIRES_TIME } from "../../config"
+import { EXPRESS_SERVER_URL } from "../../config"
 import Swal from 'sweetalert2'
 import InfiniteScroll from 'react-infinite-scroller';
 import SearchBar from '../../components/SearchBar'
+import { useNavigate } from "react-router-dom";
+import UserContext from '../../contexts/user';
 
 export default function Home() {
+
+    const { user } = React.useContext(UserContext);
 
     const [shelters, setShelters] = React.useState([]);
     const [selectedShelter, setSelectedShelter] = React.useState(-1);
 
     const [favoritesDogs, setFavoritesDogs] = React.useState([]);
+
+    let navigate = useNavigate();
+
+    React.useEffect(() => {
+        if (!user) {
+            navigate('/');
+        }
+    }, [user])
 
     const getFavorites = async () => {
         try {

@@ -1,6 +1,6 @@
 import axios from 'axios'
-import Cookies from 'js-cookie'
-import { EXPRESS_SERVER_URL, COOKIES_EXPIRES_TIME } from "../config"
+
+import { EXPRESS_SERVER_URL } from "../config"
 import Swal from 'sweetalert2'
 
 const instance = axios.create({
@@ -10,7 +10,7 @@ const instance = axios.create({
 
 // alway send token
 instance.interceptors.request.use(function (config) {
-    const token = Cookies.get('token');
+    const token = localStorage.getItem('token');
     config.headers.Authorization = token;
     return config;
 });
@@ -19,7 +19,7 @@ instance.interceptors.response.use(function (response) {
     // handle token
     const token = response.data.token || response.data.newToken;
     if (token) {
-        Cookies.set("token", token, { expires: COOKIES_EXPIRES_TIME })
+        localStorage.setItem("token", token)
     }
     return response;
 }, function (error) {

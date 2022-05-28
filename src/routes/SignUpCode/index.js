@@ -6,7 +6,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { EXPRESS_SERVER_URL, COOKIES_EXPIRES_TIME } from "../../config"
+import { EXPRESS_SERVER_URL } from "../../config"
 import axios from '../../helpers/axios'
 import Swal from 'sweetalert2'
 import TableFooter from '@mui/material/TableFooter';
@@ -16,11 +16,23 @@ import { Button, FormControl, InputLabel, Select, MenuItem, IconButton, Containe
 import EditIcon from '@mui/icons-material/Edit';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { useNavigate } from "react-router-dom";
+import UserContext from '../../contexts/user';
 
 export default function SignUpCodePage() {
 
+    const { user } = React.useContext(UserContext);
+
     const [codes, setCodes] = React.useState([]);
     const [codeInput, setCodeInput] = React.useState("");
+
+    let navigate = useNavigate();
+
+    React.useEffect(() => {
+        if (!user) {
+            navigate('/');
+        }
+    }, [user])
 
     async function getCode() {
         try {

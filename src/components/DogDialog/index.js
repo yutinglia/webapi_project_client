@@ -10,14 +10,12 @@ import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import moment from 'moment';
-import { EXPRESS_SERVER_URL, COOKIES_EXPIRES_TIME } from "../../config"
+import { EXPRESS_SERVER_URL } from "../../config"
 import axios from '../../helpers/axios'
 import Swal from 'sweetalert2'
 import { FormControl, InputLabel, Select, MenuItem, Box } from '@mui/material'
 // import Dropzone from 'react-dropzone'
 import ImageDropzone from '../ImageDropzone';
-
-
 
 export default function DogDialog(props) {
 

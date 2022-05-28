@@ -1,26 +1,37 @@
 import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom'
-
-import UserContext from './contexts/user';
 import * as React from 'react';
-import axios from './helpers/axios';
-import { EXPRESS_SERVER_URL } from "./config"
-import Cookies from 'js-cookie'
-import Navbar from './components/Navbar'
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import KeyIcon from '@mui/icons-material/Key';
+import LoginIcon from '@mui/icons-material/Login';
+import LogoutIcon from '@mui/icons-material/Logout';
+import MessageIcon from '@mui/icons-material/Message';
+import PetsIcon from '@mui/icons-material/Pets';
 import Swal from 'sweetalert2'
 
-import HomePage from './routes/Home'
-import NotFoundPage from './routes/NotFound';
-import LoginPage from './routes/Login'
-import RegisterPage from './routes/Register'
+import { EXPRESS_SERVER_URL } from "./config"
+import axios from './helpers/axios';
+import DogDetailPage from './routes/Dog';
 import DogsManagementPage from './routes/DogsManagement';
 import FavoritesPage from './routes/Favorites'
-import DogDetailPage from './routes/Dog';
+import HomePage from './routes/Home'
+import LoginPage from './routes/Login'
 import MessagesPage from './routes/Messages'
+import Navbar from './components/Navbar'
+import NotFoundPage from './routes/NotFound';
+import RegisterPage from './routes/Register'
 import SignUpCodePage from './routes/SignUpCode'
+import UserContext from './contexts/user';
+import HomeIcon from '@mui/icons-material/Home';
+
+import ProfileDialog from './components/ProfileDialog'
 
 function App() {
 
     const [user, setUser] = React.useState(null);
+
+    const [openProfile, setOpenProfile] = React.useState(false);
 
     function logout() {
         Swal.fire({
@@ -34,7 +45,7 @@ function App() {
             allowOutsideClick: false
         }).then((result) => {
             if (result.isConfirmed) {
-                Cookies.remove('token');
+                localStorage.removeItem('token');
                 setUser(null);
             }
         })
@@ -42,18 +53,19 @@ function App() {
 
     // for navbar
     const pages = [
-        { name: 'Home', link: '/' },
-        user && (user.type <= 1) ? { name: 'Dogs Management', link: '/dogs' } : null,
-        user && (user.type <= 0) ? { name: 'Sign Up Code', link: '/sign-up-code' } : null,
-        user && (user.type <= 2) ? { name: 'Favorites', link: '/favorites' } : null,
-        user && (user.type <= 2) ? { name: 'Messages', link: '/messages' } : null,
+        { name: 'Home', link: '/', icon: <HomeIcon /> },
+        user && (user.type <= 1) ? { name: 'Dogs Management', link: '/dogs', icon: <PetsIcon /> } : null,
+        user && (user.type <= 0) ? { name: 'Sign Up Code', link: '/sign-up-code', icon: <KeyIcon /> } : null,
+        user && (user.type === 2) ? { name: 'Favorites', link: '/favorites', icon: <FavoriteIcon /> } : null,
+        user && (user.type <= 2) ? { name: 'Messages', link: '/messages', icon: <MessageIcon /> } : null,
     ];
     const settings = [
         // login
-        user ? { name: 'Logout', link: '/logout', onClick: logout } : null,
+        user ? { name: 'Profile', link: '/profile', onClick: () => { setOpenProfile(true) }, icon: <AccountCircleIcon /> } : null,
+        user ? { name: 'Logout', link: '/logout', onClick: logout, icon: <LogoutIcon /> } : null,
         // not login
-        user ? null : { name: 'Register', link: '/register' },
-        user ? null : { name: 'Login', link: '/login' },
+        user ? null : { name: 'Register', link: '/register', icon: <AppRegistrationIcon /> },
+        user ? null : { name: 'Login', link: '/login', icon: <LoginIcon /> },
     ];
 
     React.useEffect(() => {
@@ -65,13 +77,13 @@ function App() {
                 if (json.status === 0) {
                     setUser(json.user);
                 } else {
-                    Cookies.remove('token');
+                    localStorage.removeItem('token');
                 }
             } catch (err) {
-                Cookies.remove('token');
+                localStorage.removeItem('token');
             }
         }
-        if (Cookies.get('token')) {
+        if (localStorage.getItem('token')) {
             getSelfInfo();
         }
     }, []);
@@ -79,6 +91,7 @@ function App() {
     return (
         <UserContext.Provider value={{ user: user, setUser: setUser }}>
             <BrowserRouter>
+                <ProfileDialog open={openProfile} onClose={() => { setOpenProfile(false) }} />
                 <Navbar pages={pages} settings={settings} />
                 <Routes>
                     <Route path="/" element={<HomePage />} />
