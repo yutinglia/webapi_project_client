@@ -13,7 +13,7 @@ export default function Home() {
     const { user } = React.useContext(UserContext);
 
     const [dogs, setDogs] = React.useState([]);
-    const [loading, setLoading] = React.useState(false);
+    const [loading, setLoading] = React.useState(true);
 
     const [page, setPage] = React.useState(0);
     const [limit, setLimit] = React.useState(5);
@@ -66,8 +66,6 @@ export default function Home() {
         const maxPage = Math.ceil(total / limit);
         if (page < maxPage) {
             await getDogs();
-            setPage(page => page + 1);
-            setLoading(false);
         }
     }
 
@@ -90,6 +88,7 @@ export default function Home() {
                     setDogs(dogs => [...dogs, ...json.dogs]);
                 }
                 setTotal(parseInt(json.total));
+                setPage(page => page + 1);
             } else {
                 throw new Error(json.err);
             }
@@ -100,6 +99,8 @@ export default function Home() {
                 text: err,
                 allowOutsideClick: false
             })
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -109,10 +110,16 @@ export default function Home() {
     }, [selectedShelter, searchText])
 
     React.useEffect(() => {
+        setPage(0);
         setDogs([]);
         getShelters();
         if (user) getFavorites();
+        // prevent loading to fast, fix a weird bug
+        const timeout = setTimeout(() => {
+            setLoading(false);
+        })
         // getDogs();
+        return (() => { clearTimeout(timeout) })
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
@@ -140,7 +147,7 @@ export default function Home() {
             <InfiniteScroll
                 pageStart={0}
                 loadMore={loadMoreDogs}
-                hasMore={page < Math.ceil(total / limit)}
+                hasMore={page < Math.ceil(total / limit) && !loading}
                 loader={<h1 className="loader" key={0}>Loading ...</h1>}
             >
                 <Grid container spacing={2}>
@@ -153,6 +160,7 @@ export default function Home() {
                     })}
                 </Grid>
             </InfiniteScroll>
+            <br />
         </Container>
     )
 }

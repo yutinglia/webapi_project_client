@@ -162,7 +162,7 @@ const WorkersMessages = React.forwardRef((props, ref) => {
 
                         {
                             messages.map((message) => (
-                                <Message key={message.msg_datetime} model={{
+                                <Message key={message.id} model={{
                                     message: message.msg,
                                     direction: message.sender === user.id ? "outgoing" : "incoming",
                                     position: "single"

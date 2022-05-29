@@ -24,6 +24,8 @@ import RegisterPage from './routes/Register'
 import SignUpCodePage from './routes/SignUpCode'
 import UserContext from './contexts/user';
 import HomeIcon from '@mui/icons-material/Home';
+import SheltersPage from './routes/Shelters'
+import LocationCityIcon from '@mui/icons-material/LocationCity';
 
 import ProfileDialog from './components/ProfileDialog'
 
@@ -56,6 +58,7 @@ function App() {
         { name: 'Home', link: '/', icon: <HomeIcon /> },
         user && (user.type <= 1) ? { name: 'Dogs Management', link: '/dogs', icon: <PetsIcon /> } : null,
         user && (user.type <= 0) ? { name: 'Sign Up Code', link: '/sign-up-code', icon: <KeyIcon /> } : null,
+        user && (user.type <= 0) ? { name: 'Shelters', link: '/shelters', icon: <LocationCityIcon /> } : null,
         user && (user.type === 2) ? { name: 'Favorites', link: '/favorites', icon: <FavoriteIcon /> } : null,
         user && (user.type <= 2) ? { name: 'Messages', link: '/messages', icon: <MessageIcon /> } : null,
     ];
@@ -102,6 +105,7 @@ function App() {
                     <Route path="/favorites" element={<FavoritesPage />} />
                     <Route path="/messages" element={<MessagesPage />} />
                     <Route path="/sign-up-code" element={<SignUpCodePage />} />
+                    <Route path="/shelters" element={<SheltersPage />} />
                     <Route path="/*" element={<NotFoundPage />} />
                 </Routes>
             </BrowserRouter>

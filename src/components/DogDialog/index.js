@@ -70,7 +70,6 @@ export default function DogDialog(props) {
         const data = new FormData(event.currentTarget);
         data.append("birthday", date.format("YYYY-MM-DD"))
         data.append("shelter", selectedShelter)
-        data.append("id", id)
         data.append("image", image[0])
 
         // for (var pair of data.entries()) {
@@ -81,7 +80,7 @@ export default function DogDialog(props) {
 
         const method = selectedDog ? "PUT" : "POST";
 
-        const result = await axios(`${EXPRESS_SERVER_URL}/dogs`, {
+        const result = await axios(`${EXPRESS_SERVER_URL}/dogs${selectedDog ? `/${id}` : ""}`, {
             method: method,
             headers: {
                 'Content-Type': 'multipart/form-data',
@@ -104,7 +103,7 @@ export default function DogDialog(props) {
         } else {
             Swal.fire({
                 icon: 'success',
-                title: 'Add Dog Success',
+                title: `${selectedDog ? "Edit" : "Add"} Dog Success`,
                 allowOutsideClick: false
             }).then((result) => {
                 if (result.isConfirmed) {
@@ -120,7 +119,7 @@ export default function DogDialog(props) {
     return (
         <div>
             <Dialog fullWidth open={dogDialogOpen} onClose={handleClose}>
-                <DialogTitle>{selectedDog ? `Edit Dog Information (Dog ID: ${id})` : "Add New Dog Information"}</DialogTitle>
+                <DialogTitle>{selectedDog ? `Edit Dog Information(Dog ID: ${id})` : "Add New Dog Information"}</DialogTitle>
                 <DialogContent>
                     <Box component="form" onSubmit={handleSubmit} enctype="multipart/form-data">
                         <TextField
@@ -169,7 +168,7 @@ export default function DogDialog(props) {
                                 label="Shelter"
                                 onChange={(e) => setSelectedShelter(e.target.value)}
                             >
-                                {shelters.map(shelter => <MenuItem key={shelter.id} value={shelter.id}>{`${shelter.name} ( Address: ${shelter.address} )`}</MenuItem>)}
+                                {shelters.map(shelter => <MenuItem key={shelter.id} value={shelter.id}>{`${shelter.name} (Address: ${shelter.address})`}</MenuItem>)}
                             </Select>
                         </FormControl>
                         <br /><br />
