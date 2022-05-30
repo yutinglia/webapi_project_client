@@ -1,16 +1,16 @@
-import * as React from 'react';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import { CardActionArea, CardActions, Grid, IconButton } from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { Button, CardActionArea, CardActions, IconButton, Container, Grid } from '@mui/material';
-import { EXPRESS_SERVER_URL } from "../../config"
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import axios from '../../helpers/axios'
-import Swal from 'sweetalert2'
-import { useNavigate } from "react-router-dom";
+import * as React from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import Swal from 'sweetalert2';
+
+import { EXPRESS_SERVER_URL } from '../../config';
 import UserContext from '../../contexts/user';
-import { useParams } from "react-router-dom";
+import axios from '../../helpers/axios';
 
 export default function Dog() {
     const [favorites, setFavorites] = React.useState([]);
@@ -25,6 +25,7 @@ export default function Dog() {
 
     React.useEffect(() => {
         getDog();
+        // if user is logged in, get user favorites
         if (user) getFavorites();
     }, [])
 

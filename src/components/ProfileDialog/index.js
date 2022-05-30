@@ -1,17 +1,14 @@
-import { blue } from '@mui/material/colors';
-import { Card, CardContent, Divider, Box, Stack } from '@mui/material/'
-import { makeStyles } from '@material-ui/core/styles';
-import * as React from 'react';
-import AddIcon from '@mui/icons-material/Add';
+import { Box, Card, CardContent, Divider, Stack } from '@mui/material/';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
+import * as React from 'react';
+import Swal from 'sweetalert2';
+import { EXPRESS_SERVER_URL } from '../../config';
 import UserContext from '../../contexts/user';
+import axios from '../../helpers/axios';
 import GoogleSignIn from '../GoogleSignIn';
-import Swal from 'sweetalert2'
-import { EXPRESS_SERVER_URL } from '../../config'
-import axios from '../../helpers/axios'
 
 export default function ProfileDialog(props) {
     const { onClose, open } = props;
@@ -33,6 +30,7 @@ export default function ProfileDialog(props) {
         setGoogleInfo(json.google);
     }
 
+    // add google sign in data
     const handleGoogleCallback = async (res, err) => {
         if (err) {
             Swal.fire({

@@ -1,10 +1,10 @@
-import React from 'react'
-import PublicMessagesPage from '../../components/Messages/Public'
-import WorkerMessagesPage from '../../components/Messages/Worker'
-import UserContext from '../../contexts/user';
-import { io } from "socket.io-client";
-import { EXPRESS_SERVER_URL } from "../../config"
+import React from 'react';
 import { useNavigate } from "react-router-dom";
+import { io } from "socket.io-client";
+import PublicMessagesPage from '../../components/Messages/Public';
+import WorkerMessagesPage from '../../components/Messages/Worker';
+import { EXPRESS_SERVER_URL } from "../../config";
+import UserContext from '../../contexts/user';
 
 export default function MessagesPage() {
 
@@ -22,6 +22,7 @@ export default function MessagesPage() {
     }, [user])
 
     React.useEffect(() => {
+        // connect to server with socket.io for chat
         const socket = io(EXPRESS_SERVER_URL, {
             auth: {
                 token: localStorage.getItem('token')
@@ -31,6 +32,7 @@ export default function MessagesPage() {
             childRef.current.update();
         })
         setSocket(socket);
+        // disconnect when exit this page
         return (() => {
             socket.off();
             socket.disconnect();

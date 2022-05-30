@@ -1,12 +1,12 @@
+import { Container, FormControl, Grid, InputLabel, MenuItem, Select, Stack } from '@mui/material'
 import React from 'react'
-import { Container, Grid, Box, Stack, FormControl, InputLabel, Select, MenuItem } from '@mui/material'
-import DogCard from '../../components/DogCard'
-import axios from '../../helpers/axios'
-import { EXPRESS_SERVER_URL } from "../../config"
+import InfiniteScroll from 'react-infinite-scroller'
 import Swal from 'sweetalert2'
-import InfiniteScroll from 'react-infinite-scroller';
+import DogCard from '../../components/DogCard'
 import SearchBar from '../../components/SearchBar'
-import UserContext from '../../contexts/user';
+import { EXPRESS_SERVER_URL } from "../../config"
+import UserContext from '../../contexts/user'
+import axios from '../../helpers/axios'
 
 export default function Home() {
 
@@ -60,6 +60,7 @@ export default function Home() {
         }
     }
 
+    // for infinite scroll load more data
     const loadMoreDogs = async () => {
         if (loading) return;
         setLoading(true);
@@ -118,7 +119,6 @@ export default function Home() {
         const timeout = setTimeout(() => {
             setLoading(false);
         })
-        // getDogs();
         return (() => { clearTimeout(timeout) })
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])

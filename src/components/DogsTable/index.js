@@ -1,24 +1,23 @@
-import * as React from 'react';
+import AddIcon from '@mui/icons-material/Add';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import HelpIcon from '@mui/icons-material/Help';
+import { Button, FormControl, IconButton, InputLabel, MenuItem, Select } from '@mui/material/';
+import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import { EXPRESS_SERVER_URL } from "../../config"
-import axios from '../../helpers/axios'
-import Swal from 'sweetalert2'
 import TableFooter from '@mui/material/TableFooter';
+import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
-import Pagination from '@mui/material/Pagination'
-import { Button, FormControl, InputLabel, Select, MenuItem, IconButton } from '@mui/material/';
-import EditIcon from '@mui/icons-material/Edit';
-import DogDialog from '../DogDialog'
-import AddIcon from '@mui/icons-material/Add';
-import DeleteIcon from '@mui/icons-material/Delete';
-import HelpIcon from '@mui/icons-material/Help';
-import DogBreedHelperDialog from '../DogBreedHelperDialog'
+import TableRow from '@mui/material/TableRow';
+import * as React from 'react';
+import Swal from 'sweetalert2';
+import { EXPRESS_SERVER_URL } from "../../config";
+import axios from '../../helpers/axios';
+import DogBreedHelperDialog from '../DogBreedHelperDialog';
+import DogDialog from '../DogDialog';
 
 export default function DogsTable() {
 

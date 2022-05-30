@@ -1,15 +1,15 @@
-import * as React from 'react';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import { CardActionArea, CardActions, IconButton } from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { Button, CardActionArea, CardActions, IconButton } from '@mui/material';
-import { EXPRESS_SERVER_URL } from "../../config"
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import axios from '../../helpers/axios'
-import Swal from 'sweetalert2'
+import * as React from 'react';
 import { useNavigate } from "react-router-dom";
+import Swal from 'sweetalert2';
+import { EXPRESS_SERVER_URL } from "../../config";
 import UserContext from '../../contexts/user';
+import axios from '../../helpers/axios';
 
 export default function DogCard(props) {
     const { dog, favorites, getFavorites } = props;
@@ -27,6 +27,7 @@ export default function DogCard(props) {
         navigate(`/dogs/${dog.id}`);
     }
 
+    // add or delete favorites
     const editFavorites = async () => {
         if (!user) {
             Swal.fire({

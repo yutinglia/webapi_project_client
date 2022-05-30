@@ -1,27 +1,13 @@
-import React from 'react'
-import styles from "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
 import {
-    MainContainer,
-    ChatContainer,
-    MessageList,
-    Message,
-    MessageInput,
-    Sidebar,
-    Search,
-    ConversationList,
-    Conversation,
-    Avatar,
-    ConversationHeader,
-    EllipsisButton,
-    TypingIndicator,
-    MessageSeparator
+    ChatContainer, ConversationHeader, MainContainer, Message,
+    MessageInput, MessageList
 } from "@chatscope/chat-ui-kit-react";
-import { Box, IconButton } from '@mui/material'
+import { Box } from '@mui/material';
+import React from 'react';
+import Swal from 'sweetalert2';
+import { EXPRESS_SERVER_URL } from "../../config";
 import UserContext from '../../contexts/user';
-import axios from '../../helpers/axios'
-import Swal from 'sweetalert2'
-import { EXPRESS_SERVER_URL } from "../../config"
-import ReplayIcon from '@mui/icons-material/Replay';
+import axios from '../../helpers/axios';
 
 const PublicMessages = React.forwardRef((props, ref) => {
 
@@ -35,6 +21,7 @@ const PublicMessages = React.forwardRef((props, ref) => {
         getMessages();
     }, [])
 
+    // provide update function to messages page
     React.useImperativeHandle(ref, () => ({
         update: getMessages
     }));

@@ -1,18 +1,18 @@
-import * as React from 'react';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import axios from '../../helpers/axios'
-import Swal from 'sweetalert2'
-import { EXPRESS_SERVER_URL } from "../../config"
+import * as React from 'react';
+import Swal from 'sweetalert2';
+import { EXPRESS_SERVER_URL } from "../../config";
+import axios from '../../helpers/axios';
 
 const ITEM_HEIGHT = 48;
 
 export default function MessageMenu(props) {
     const { id, updateMessages, socket } = props;
 
-    const deleteDog = async () => {
+    const deleteMessage = async () => {
         try {
             const result = await axios(`${EXPRESS_SERVER_URL}/messages/${id}`, { method: 'DELETE' })
             const json = result.data;
@@ -41,7 +41,7 @@ export default function MessageMenu(props) {
     };
     const handleDeleteClick = () => {
         handleClose();
-        deleteDog();
+        deleteMessage();
     };
     const handleClose = () => {
         setAnchorEl(null);

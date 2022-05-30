@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { useDropzone } from 'react-dropzone';
-import { Box, Button, Stack, Container } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete';
-import { EXPRESS_SERVER_URL } from "../../config"
+import { Box, Button, Stack } from '@mui/material';
+import React, { useEffect } from 'react';
+import { useDropzone } from 'react-dropzone';
+import { EXPRESS_SERVER_URL } from "../../config";
 
 const imgStyle = {
     display: 'block',
@@ -11,7 +11,6 @@ const imgStyle = {
 };
 
 export default function ImageDropzone(props) {
-    // const [files, setFiles] = useState([]);
 
     const { files, setFiles, selectedDog } = props;
 
@@ -28,6 +27,7 @@ export default function ImageDropzone(props) {
         }
     });
 
+    // image preview
     const thumbs = files.map(file => (
         <Box sx={{ width: "200px" }} key={file.name}>
             <Stack>

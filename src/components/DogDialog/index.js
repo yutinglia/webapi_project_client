@@ -1,22 +1,21 @@
-import * as React from 'react';
+import { Box, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import TextField from '@mui/material/TextField';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import moment from 'moment';
-import { EXPRESS_SERVER_URL } from "../../config"
-import axios from '../../helpers/axios'
-import Swal from 'sweetalert2'
-import { FormControl, InputLabel, Select, MenuItem, Box } from '@mui/material'
-// import Dropzone from 'react-dropzone'
+import * as React from 'react';
+import Swal from 'sweetalert2';
+import { EXPRESS_SERVER_URL } from "../../config";
+import axios from '../../helpers/axios';
 import ImageDropzone from '../ImageDropzone';
 
+// for edit or add dog
 export default function DogDialog(props) {
 
     let { selectedDog, dogDialogOpen, setDogDialogOpen, disableBackdropClick, getDogs } = props;
@@ -71,10 +70,6 @@ export default function DogDialog(props) {
         data.append("birthday", date.format("YYYY-MM-DD"))
         data.append("shelter", selectedShelter)
         data.append("image", image[0])
-
-        // for (var pair of data.entries()) {
-        //     console.log(pair[0] + ', ' + pair[1]);
-        // }
 
         setDogDialogOpen(false);
 

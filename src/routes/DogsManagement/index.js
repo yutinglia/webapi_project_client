@@ -1,7 +1,7 @@
-import React from 'react'
-import { Container, Paper, Stack, Typography, TextField, Button, Grid } from '@mui/material'
-import DogsTable from '../../components/DogsTable'
+import { Container, Paper, Stack } from '@mui/material';
+import React from 'react';
 import { useNavigate } from "react-router-dom";
+import DogsTable from '../../components/DogsTable';
 import UserContext from '../../contexts/user';
 
 export default function DogeManagement() {

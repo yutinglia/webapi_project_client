@@ -1,28 +1,14 @@
-import React from 'react'
-import styles from "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
 import {
-    MainContainer,
-    ChatContainer,
-    MessageList,
-    Message,
-    MessageInput,
-    Sidebar,
-    Search,
-    ConversationList,
-    Conversation,
-    Avatar,
-    ConversationHeader,
-    EllipsisButton,
-    TypingIndicator,
-    MessageSeparator
+    ChatContainer, Conversation, ConversationHeader, ConversationList, MainContainer, Message,
+    MessageInput, MessageList, Sidebar
 } from "@chatscope/chat-ui-kit-react";
-import { Box, IconButton, Typography, Stack } from '@mui/material'
+import { Box, Stack } from '@mui/material';
+import React from 'react';
+import Swal from 'sweetalert2';
+import { EXPRESS_SERVER_URL } from "../../config";
 import UserContext from '../../contexts/user';
-import axios from '../../helpers/axios'
-import Swal from 'sweetalert2'
-import { EXPRESS_SERVER_URL } from "../../config"
-import ReplayIcon from '@mui/icons-material/Replay';
-import MessageMenu from './Menu'
+import axios from '../../helpers/axios';
+import MessageMenu from './Menu';
 
 const WorkersMessages = React.forwardRef((props, ref) => {
 
@@ -41,10 +27,10 @@ const WorkersMessages = React.forwardRef((props, ref) => {
     }, [])
 
     React.useImperativeHandle(ref, () => ({
-        update: updateMessages
+        update: updateChatAndMessages
     }));
 
-    const updateMessages = () => {
+    const updateChatAndMessages = () => {
         getMessages();
         getChats();
     }
@@ -95,7 +81,7 @@ const WorkersMessages = React.forwardRef((props, ref) => {
             return;
         }
 
-        updateMessages();
+        updateChatAndMessages();
 
         socket.emit('c-updated-message');
 
@@ -174,7 +160,7 @@ const WorkersMessages = React.forwardRef((props, ref) => {
                                             direction="row"
                                         >
                                             <Message.HtmlContent html={`${message.msg}`} />
-                                            <MessageMenu updateMessages={updateMessages} id={message.id} socket={socket} />
+                                            <MessageMenu updateMessages={updateChatAndMessages} id={message.id} socket={socket} />
                                         </Stack>
                                     </Message.CustomContent>
                                     <Message.Footer sender={message.sender === user.id ? "" : message.sender_name} sentTime={new Date(message.msg_datetime).toLocaleString()} />

@@ -1,21 +1,14 @@
-import * as React from 'react';
+import ChangeCircleIcon from '@mui/icons-material/ChangeCircle';
+import { FormControl, InputLabel, MenuItem, Select, Stack } from '@mui/material';
 import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import moment from 'moment';
-import { EXPRESS_SERVER_URL } from "../../config"
-import axios from 'axios'
-import Swal from 'sweetalert2'
-import { FormControl, InputLabel, Select, MenuItem, Stack, Box } from '@mui/material'
-import ChangeCircleIcon from '@mui/icons-material/ChangeCircle';
+import axios from 'axios';
 import copy from 'copy-to-clipboard';
+import * as React from 'react';
+import Swal from 'sweetalert2';
 
 export default function DogDialog(props) {
 
@@ -25,6 +18,7 @@ export default function DogDialog(props) {
     const [selectedBreed, setSelectedBreed] = React.useState(0);
     const [dogImgURL, setDogImgURL] = React.useState("");
 
+    // get all dog breeds from the api
     const getDogBreeds = async () => {
         try {
             const result = await axios(`https://dog.ceo/api/breeds/list/all`, { method: 'GET' })

@@ -1,28 +1,30 @@
-import axios from 'axios'
+import axios from 'axios';
+import Swal from 'sweetalert2';
+import { EXPRESS_SERVER_URL } from "../config";
 
-import { EXPRESS_SERVER_URL } from "../config"
-import Swal from 'sweetalert2'
 
 const instance = axios.create({
     baseURL: EXPRESS_SERVER_URL,
     timeout: 10000
 });
 
-// alway send token
+// auto add token to header when send request
 instance.interceptors.request.use(function (config) {
     const token = localStorage.getItem('token');
     config.headers.Authorization = token;
     return config;
 });
 
+// auto process response
 instance.interceptors.response.use(function (response) {
-    // handle token
+    // if response has new token, save token
     const token = response.data.token || response.data.newToken;
     if (token) {
         localStorage.setItem("token", token)
     }
     return response;
 }, function (error) {
+    // auto process response error
     if (error.response.status !== 401) {
         Swal.fire({
             icon: 'error',

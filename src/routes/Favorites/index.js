@@ -1,20 +1,15 @@
+import { Container, Grid } from '@mui/material'
 import React from 'react'
-import { Container, Grid, Box, Stack, FormControl, InputLabel, Select, MenuItem } from '@mui/material'
-import DogCard from '../../components/DogCard'
-import axios from '../../helpers/axios'
-import { EXPRESS_SERVER_URL } from "../../config"
+import { useNavigate } from "react-router-dom"
 import Swal from 'sweetalert2'
-import InfiniteScroll from 'react-infinite-scroller';
-import SearchBar from '../../components/SearchBar'
-import { useNavigate } from "react-router-dom";
-import UserContext from '../../contexts/user';
+import DogCard from '../../components/DogCard'
+import { EXPRESS_SERVER_URL } from "../../config"
+import UserContext from '../../contexts/user'
+import axios from '../../helpers/axios'
 
 export default function Home() {
 
     const { user } = React.useContext(UserContext);
-
-    const [shelters, setShelters] = React.useState([]);
-    const [selectedShelter, setSelectedShelter] = React.useState(-1);
 
     const [favoritesDogs, setFavoritesDogs] = React.useState([]);
 

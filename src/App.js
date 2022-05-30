@@ -1,33 +1,32 @@
-import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom'
-import * as React from 'react';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import HomeIcon from '@mui/icons-material/Home';
 import KeyIcon from '@mui/icons-material/Key';
+import LocationCityIcon from '@mui/icons-material/LocationCity';
 import LoginIcon from '@mui/icons-material/Login';
 import LogoutIcon from '@mui/icons-material/Logout';
 import MessageIcon from '@mui/icons-material/Message';
 import PetsIcon from '@mui/icons-material/Pets';
-import Swal from 'sweetalert2'
-
-import { EXPRESS_SERVER_URL } from "./config"
+import * as React from 'react';
+import { BrowserRouter, Outlet, Route, Routes } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import Navbar from './components/Navbar';
+import ProfileDialog from './components/ProfileDialog';
+import { EXPRESS_SERVER_URL } from './config';
+import UserContext from './contexts/user';
 import axios from './helpers/axios';
 import DogDetailPage from './routes/Dog';
 import DogsManagementPage from './routes/DogsManagement';
-import FavoritesPage from './routes/Favorites'
-import HomePage from './routes/Home'
-import LoginPage from './routes/Login'
-import MessagesPage from './routes/Messages'
-import Navbar from './components/Navbar'
+import FavoritesPage from './routes/Favorites';
+import HomePage from './routes/Home';
+import LoginPage from './routes/Login';
+import MessagesPage from './routes/Messages';
 import NotFoundPage from './routes/NotFound';
-import RegisterPage from './routes/Register'
-import SignUpCodePage from './routes/SignUpCode'
-import UserContext from './contexts/user';
-import HomeIcon from '@mui/icons-material/Home';
-import SheltersPage from './routes/Shelters'
-import LocationCityIcon from '@mui/icons-material/LocationCity';
+import RegisterPage from './routes/Register';
+import SheltersPage from './routes/Shelters';
+import SignUpCodePage from './routes/SignUpCode';
 
-import ProfileDialog from './components/ProfileDialog'
 
 function App() {
 
@@ -35,6 +34,7 @@ function App() {
 
     const [openProfile, setOpenProfile] = React.useState(false);
 
+    // show popup dialog to asking user confirm to logout
     function logout() {
         Swal.fire({
             title: 'Are you sure?',
