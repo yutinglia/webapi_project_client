@@ -8,7 +8,7 @@ In the project directory, you can run:
 
 ### `npm install` / `yarn install`
 
-Install all required packages
+Install all required packages ( Suggest use yarn )
 
 ### `npm start` / `yarn start`
 
