@@ -2,6 +2,7 @@ import {
     ChatContainer, Conversation, ConversationHeader, ConversationList, MainContainer, Message,
     MessageInput, MessageList, Sidebar
 } from "@chatscope/chat-ui-kit-react";
+import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
 import { Box, Stack } from '@mui/material';
 import React from 'react';
 import Swal from 'sweetalert2';
